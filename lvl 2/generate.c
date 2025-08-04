@@ -55,7 +55,7 @@ void generate(char *str, char *result, int *used, int len, int depth)
 		if (!used[i])
 		{
 			used[i] = 1;
-			result[depth] = str[i];
+			result[depth] = used[i];
 			generate(str, result, used, len, depth + 1);
 			used[i] = 0;
 		}
