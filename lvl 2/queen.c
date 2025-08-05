@@ -1,3 +1,7 @@
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
 void print_board(int *board, int n)
 {
 	int i = 0;
@@ -16,7 +20,7 @@ int is_valid(int * board, int row, int col)
 	int i = 0;
 	while (i < row)
 	{
-		if (board[i] == col || board[i] - i == col - row || board[i] - i == col + row)
+		if (board[i] == col || board[i] - i == col - row || board[i] + i == col + row)
 			return (0);
 		++i;
 	}
@@ -57,6 +61,5 @@ int main(int argc, char **argv)
 		++i;
 	}
 	nqueen(n, board, 0);
-	free(board);
 	return (0);
 } 

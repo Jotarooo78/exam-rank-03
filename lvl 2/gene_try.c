@@ -1,8 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
-int    ft_strlen(char *str)
+int ft_strlen(char *str)
 {
     int i = 0;
     while (str[i])
@@ -14,7 +13,6 @@ int check_dup(char *str)
 {
     int i = 0;
     int j;
-
     while (str[i])
     {
         j = i + 1;
@@ -32,10 +30,12 @@ int check_dup(char *str)
 void    sorted(char *str)
 {
     int i = 0;
+    int j;
     char tmp;
+
     while (str[i])
     {
-        int j = i + 1;
+        j = i + 1;
         while (str[j])
         {
             if (str[i] > str[j])
@@ -53,12 +53,10 @@ void    sorted(char *str)
 void    generate(char *str, char *result, int *used, int len, int depth)
 {
     int i = 0;
-
     if (depth == len)
     {
         write(1, result, len);
         write(1, "\n", 1);
-        return ;
     }
     while (i < len)
     {
@@ -73,25 +71,20 @@ void    generate(char *str, char *result, int *used, int len, int depth)
     }
 }
 
-
 int main(int argc, char **argv)
 {
-    int len;
-    int *used;
-    char *result;
-
     if (argc != 2 || check_dup(argv[1]))
         return (1);
-    len = ft_strlen(argv[1]);
+    int len = ft_strlen(argv[1]);
+    char *result;
+    int *used;
     result = malloc(sizeof(char) * (len + 1));
-    if (result == NULL)
+    if (!result)
         return (1);
-    used = calloc(len, sizeof(int));
+    used = calloc(len, 0);
     if (!used)
         return (1);
     sorted(argv[1]);
     generate(argv[1], result, used, len, 0);
-    free(result);
-    free(used);
     return (0);
 }
