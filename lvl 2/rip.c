@@ -1,84 +1,51 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
-// don't forget to print space instead of _ ana i used _ for clarity wsalam
 
-int    is_valid(char *str)
+int val(char *s)
 {
-    int    i;
-    int    res;
-
-    i = 0;
-    res = 0;
-    while (str[i])
+    int open = 0;
+    int close = 0;
+    for (size_t i = 0; s[i]; i++)
     {
-        if (str[i] == '(')
-            res++;
-        if (str[i] == ')')
-            res--;
-        if (res < 0)
-            return (0);
-        i++;
-    }
-    if (res == 0)
-        return (1);
-    return (0);
-}
-
-void    calc_min(char *str, int *min, int index, int change)
-{
-    int        i;
-    char    c;
-  if (change > *min)
-      return ;
-        if (is_valid(str) && change < *min)
+        if(s[i] == '(')
+            open++;
+        else if(s[i] == ')')
         {
-            *min = change;
+            if(open > 0)
+                open--;
+            else 
+                close++;
         }
-    i = index;
-    while (str[i])
-    {
-        c = str[i];
-        str[i] = '_';
-        change++;
-        calc_min(str, min, i + 1, change);
-        str[i] = c;
-        change--;
-        i++;
     }
+    return open + close;
+}
+
+void solve(char *s, int m_fix, int to_fix, int pos)
+{
+    if(m_fix == to_fix && val(s) == 0)
+    {
+        puts(s);
+        return ;
+    }
+    for (size_t i = 0; s[i]; i++)
+    {
+        if(s[i] == '(' || s[i] == ')')
+        {
+            char c = s[i];
+            s[i] = ' ';
+            solve(s, m_fix, to_fix, i+1);
+            s[i] = c;
+        }
+    }
+    
 }
 
 
-
-void    rip(char *str, int min, int index, int change)
+int main(int ac, char **av)
 {
-    int        i;
-    char    c;
-  if (change > min)
-      return ;
-        if (is_valid(str) && change == min)
-            puts(str);
-    i = index;
-    while (str[i])
-    {
-        c = str[i];
-        str[i] = '_';
-        change++;
-        rip(str, min, i + 1, change);
-        str[i] = c;
-        change--;
-        i++;
-    }
-}
-
-int    main(int ac, char **av)
-{
-    if (ac != 2 || av[1][0] == 0)
-    {
-        write (1,"\n",1);
-        return (1);
-    }
-    int min = strlen(av[1]);
-    calc_min(av[1], &min, 0, 0);
-    rip(av[1], min, 0, 0);
+    if(ac != 2)
+     return 1;
+    int m_fix = val(av[1]);
+    solve(av[1], m_fix, 0, 0);
 }

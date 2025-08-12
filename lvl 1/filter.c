@@ -42,8 +42,7 @@ char	*get_stdin(int fd)
 	static int	buffer_pos = 0;
 	static int	buffer_read = 0;
 	char		line[70000];
-	int		i = 0;
-
+	int		i = 0; 
 	while (1)
 	{
 		if (buffer_pos >= buffer_read)

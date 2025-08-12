@@ -30,7 +30,7 @@ void	ft_powerset(int *set, int size, int target, int index, int *power_set, int 
 		sum = 0;
 		while (i < size_powerset) // il additionne toutes les valeurs stockees dans mon essai
 		{
-			sum = sum + power_set[i];
+			sum = sum + set[i];
 			i++;
 		}
 		if (sum == target)

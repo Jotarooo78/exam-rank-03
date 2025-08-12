@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void print_board(int *board, int n)
+void print_board(char *board, int n)
 {
 	int i = 0;
 	while (i < n)
@@ -15,7 +15,7 @@ void print_board(int *board, int n)
 	printf("\n");
 }
 
-int is_valid(int * board, int row, int col)
+int is_valid(char* board, int row, int col)
 {
 	int i = 0;
 	while (i < row)
@@ -27,7 +27,7 @@ int is_valid(int * board, int row, int col)
 	return (1); 
 }
 
-void nqueen(int n, int *board, int row)
+void nqueen(char *board, int n, int row)
 {
 	int col = 0;
 	
@@ -60,6 +60,6 @@ int main(int argc, char **argv)
 		board[i] = 0;
 		++i;
 	}
-	nqueen(n, board, 0);
+	nqueen(board, n, 0);
 	return (0);
 } 
