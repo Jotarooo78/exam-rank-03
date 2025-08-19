@@ -1,6 +1,5 @@
 #include <unistd.h>
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
 
 int ft_strlen(char *str)
@@ -13,48 +12,24 @@ int ft_strlen(char *str)
     return (i);
 }
 
-int check_dup(char *str)
-{
-    int i = 0;
-    int j;
-    while (str[i])
-    {
-        j = i + 1;
-        while (str[j])
-        {
-            if (str[i] == str[j])
-                return (1);
-            j++;
-        }
-        i++;
-    }
-    return (0);
-}
-
-void    ft_swap(char *a, char *b)
-{
-    char tmp;
-
-    tmp = *a;
-    *a = *b;
-    *b = tmp;
-}
-
 void sorted(char *str)
 {
+	char 	tmp;
 	int		i;
 	int		j;
 
 	i = 0;
+	j = i + 1;
 
-	while (str[i])
+	while (str[i] != '\0')
 	{
-	    j = i + 1;
-		while (str[j])
+		while (str[j] != '\0')
 		{
 			if (str[i] > str[j])
 			{
-				ft_swap(&str[i], &str[j]);
+				tmp = str[i];
+				str[i] = str[j];
+				str[j] = tmp;
 			}
 			j++;
 		}
@@ -63,33 +38,40 @@ void sorted(char *str)
 	return ;
 }
 
-void permute(char *str, int start, int end)
+
+void    permutations(char *str, char *result, int *used, int len, int depth)
 {
-    int i = start;
-    
-    if (start == end)
+    int i = 0;
+    if (depth == len)
     {
-        puts(str);
-        return;
+        puts(result);
+        return ;
     }
-    while (i <= end)
+    while (i < len)
     {
-        ft_swap(&str[start], &str[i]);
-        sorted(str + start + 1);
-        permute(str, start + 1, end);
-        sorted(str + start + 1);
-        ft_swap(&str[start], &str[i]);
+        if (!used[i])
+        {
+            used[i] = 1;
+            result[depth] = str[i];
+            permutations(str, result, used, len, depth + 1);
+            used[i] = 0;
+        }
         i++;
     }
 }
 
 int main(int argc, char **argv)
 {
+    if (argc != 2)
+        return (1);
     int len = ft_strlen(argv[1]);
-    if (argc == 2 || !check_dup(argv[1]))
-    {
-        sorted(argv[1]);
-        permute(argv[1], 0, len - 1);
-    }
-    return 0;
+    char *result = malloc(sizeof(char) * (len + 1));
+    int *used = calloc(len, sizeof(int));
+    if (!used || !result)
+        return (1);
+    sorted(argv[1]);
+    permutations(argv[1], result, used, len, 0);
+    free(result);
+    free(used);
+    return (0);
 }

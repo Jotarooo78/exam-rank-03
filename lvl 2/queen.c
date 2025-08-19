@@ -41,7 +41,7 @@ void nqueen(char *board, int n, int row)
 		if (is_valid(board, row, col))
 		{
 			board[row] = col;
-			nqueen(n, board, row + 1);
+			nqueen(board, n , row + 1);
 		}
 		++col;
 	}
@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 		n = atoi(argv[1]);
 	else
 		return (1);
-	int board[10000];
+	char board[10000];
 	int i = 0;
 	while (i < n)
 	{
